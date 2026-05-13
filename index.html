@@ -7,35 +7,37 @@
         <link rel="stylesheet" href="css/main.css">
     </head>
 
-    <body onload="onInit()">
+    <body onload="onInit()" onpointerup="onKeyUpClicked(event)">
     
-        <h1>Mine Sweeper</h1>
-        
-        <table>
-            <tbody class="face-and-data">
-                <tr>
-                    <td> <h3 class="unmarked-mines">Unmarked Mines: <span>0</span></h3> </td>
-                    <td class="face"> </td>
-                    <td> <h3 class="time">Time: <span>0</span>s</h3> </td>
-                </tr>
-            </tbody>
-        </table>
+        <header>Mine Sweeper</header>
+
+        <div class="wrapper">
+            <table>
+                <tbody class="face-and-data">
+                    <tr>
+                        <td> <h3 class="unmarked-mines">Unmarked Mines: <span>0</span></h3> </td>
+                        <td class="face"> </td>
+                        <td> <h3 class="time">Time: <span>0</span>s</h3> </td>
+                    </tr>
+                </tbody>
+            </table>
 
 
-        <div class="btns-container">
-            <button class="btn btn-begginer" onclick="onLevelClick(this)">Begginer</button>
-            <button class="btn btn-medium" onclick="onLevelClick(this)">Medium</button>
-            <button class="btn btn-expert" onclick="onLevelClick(this)">Expert</button>
+            <div class="btns-container">
+                <button class="btn btn-begginer" onclick="onLevelClick(this)">Begginer</button>
+                <button class="btn btn-medium" onclick="onLevelClick(this)">Medium</button>
+                <button class="btn btn-expert" onclick="onLevelClick(this)">Expert</button>
+            </div>
+            
+            
+            
+            <table>
+                <tbody class="board"> </tbody>
+            </table>
         </div>
-        
-        
-        
-        <table>
-            <tbody class="board"> </tbody>
-        </table>
 
+        <footer>Developed by Avi Lupovitch</footer>
         <script src="js/utils.js"></script>
         <script src="js/main.js"></script>
-        <footer>Developed by Avi Lupovitch</footer>
     </body>
 </html>

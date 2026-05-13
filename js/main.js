@@ -23,6 +23,7 @@ var gTimerIntervalId;
 var gLevel;
 var gGame;
 var gBoard;
+var gElCellDownClicked;
 
 
 function onInit() {
@@ -80,10 +81,8 @@ function renderBoard() {
                             class="${className}" 
                             data-i="${i}" data-j="${j}"
                             onpointerdown="onCellDownClicked(this, ${i}, ${j}, event)"
-                            onpointerup="onCellUpClicked(this, ${i}, ${j}, event)"
                             onclick="onCellClicked(this, ${i}, ${j})"
-                            oncontextmenu="onCellMarked(this, ${i}, ${j}); return false;"
-                            onmousewheel="onShowNegs(this, ${i}, ${j})">\n
+                            oncontextmenu="onCellMarked(this, ${i}, ${j}); return false;" >\n
                             \t${getCellInnerHTML(cell)}\n
                          </td>\n`;
         }
@@ -125,14 +124,21 @@ function updateTime() {
 
 function onCellDownClicked(elCell, i, j, ev) {
     if (isGameFinished()) return;
+    gElCellDownClicked = elCell;
     changeFace(FACE_CLICK);
-    if (ev.button === 1) showNegs(elCell, i, j);
+    if (ev.button === 1) {
+        showNegs(elCell, i, j);
+        ev.preventDefault();
+    }
 }
 
-function onCellUpClicked(elCell, i, j, ev) {
+function onKeyUpClicked(ev) {
     if (isGameFinished()) return;
     changeFace(FACE_SMILE);
-    if (ev.button === 1) unshowNegs(elCell, i, j);
+    if (ev.button === 1) {
+        unshowNegs(gElCellDownClicked, +gElCellDownClicked.dataset.i, +gElCellDownClicked.dataset.j);
+        ev.preventDefault();
+    }
 }
 
 function onCellClicked(elCell, i, j) {

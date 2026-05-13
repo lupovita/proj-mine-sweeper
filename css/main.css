@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 :root {
     /* Meaningful names based on function, not just the color name */
     --body-bg: #111;
@@ -23,17 +27,43 @@
 }
 
 body {
+    margin: 0;
     background: var(--body-bg);
     font-family: Arial, Helvetica, sans-serif;
     color: var(--body-color);
     text-align: center;
 }
-  
-h1 {
+
+
+header, footer {
+    min-height: 5vh;
+
+    background-color: skyblue;
+    text-shadow: var(--header-text-shadow);
+    font-size: 1.5rem;
+    text-align: center;
+    line-height: 5vh;
+}
+
+header {
+    padding-block: 1vh;
+    line-height: 7vh;
+    font-size: 3rem;
+}
+
+.wrapper {
+    min-height: calc(100vh - 5vh - 2vh - 7vh - (2 * 30px));
+    /* background-color: whitesmoke; */
+    margin: 30px auto;
+}
+
+
+/* h1 {
     text-align: center;
     text-shadow: var(--header-text-shadow);
     font-size: xxx-large;
-}
+    margin:0;
+} */
 
 .face img {
     width: 40px;
@@ -82,7 +112,7 @@ table {
 }
 
 .cell img {
-    width: 35px;
+    height: 35px;
 }
 
 .revealed {
