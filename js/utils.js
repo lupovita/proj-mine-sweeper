@@ -126,10 +126,10 @@ function isNeg(location1, location2, mat) {
     return verticalDiff <= 1 && horizontalDiff <= 1
 }
 
-function getRandomIntInclusive(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min) + min);
+function getRandomIntInclusive(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }

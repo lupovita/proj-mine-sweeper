@@ -9,9 +9,33 @@
 
     <body onload="onInit()">
     
+        <h1>Mine Sweeper</h1>
+        
+        <table>
+            <tbody class="face-and-data">
+                <tr>
+                    <td> <h3 class="unmarked-mines">Unmarked Mines: <span>0</span></h3> </td>
+                    <td class="face"> </td>
+                    <td> <h3 class="time">Time: <span>0</span>s</h3> </td>
+                </tr>
+            </tbody>
+        </table>
 
+
+        <div class="btns-container">
+            <button class="btn btn-begginer" onclick="onLevelClick(this)">Begginer</button>
+            <button class="btn btn-medium" onclick="onLevelClick(this)">Medium</button>
+            <button class="btn btn-expert" onclick="onLevelClick(this)">Expert</button>
+        </div>
+        
+        
+        
+        <table>
+            <tbody class="board"> </tbody>
+        </table>
 
         <script src="js/utils.js"></script>
         <script src="js/main.js"></script>
+        <footer>Developed by Avi Lupovitch</footer>
     </body>
 </html>

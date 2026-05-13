@@ -1,0 +1,201 @@
+:root {
+    /* Meaningful names based on function, not just the color name */
+    --body-bg: #111;
+    --body-color: white;
+    --header-text-shadow: 3px 3px violet;
+    --seat: #761818;
+    --seat-selected: orange;
+    --seat-booked: red;
+    --seat-booked-hover: grey;
+    --seat-highlighted: skyblue;
+    --border-thin: 1px solid white;
+    --box-shadow: 5px 5px rgb(77, 211, 193);
+    --icons: transparent;
+    --active: purple;
+    --clr1: blue;
+    --clr2: green;
+    --clr3: red;
+    --clr4: darkblue;
+    --clr5: brown;
+    --clr6: lightgreen;
+    --clr7: violet;
+    --clr8: rgb(14, 154, 209);
+}
+
+body {
+    background: var(--body-bg);
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--body-color);
+    text-align: center;
+}
+  
+h1 {
+    text-align: center;
+    text-shadow: var(--header-text-shadow);
+    font-size: xxx-large;
+}
+
+.face img {
+    width: 40px;
+    cursor: pointer;
+}
+
+.face img:hover {
+    width: 50px;
+}
+
+.face img:active {
+    width: 40px;
+}
+
+.btns-container {
+    width: fit-content;
+    margin: 10px auto;
+}
+
+button {
+    margin: 10px 10px;
+    padding: 5px 10px;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+button:hover {
+    background-color: var(--clr8);
+}
+
+table {
+    /* width: 400px; */
+    margin: 20px auto;
+    /* border-collapse: separate;
+    border-spacing: 10px; */
+}
+
+.cell {
+    background-color: grey;
+    width: 45px;
+    height: 45px;
+    border-radius: 7px;
+    font-size: 20px;
+    font-weight: 700;
+    transition: 1s;
+}
+
+.cell img {
+    width: 35px;
+}
+
+.revealed {
+    background-color: lightgrey;
+}
+
+.mines-around-1 {
+    color: var(--clr1);
+}
+
+.mines-around-2 {
+    color: var(--clr2);
+}
+
+.mines-around-3 {
+    color: var(--clr3);
+}
+
+.mines-around-4 {
+    color: var(--clr4);
+}
+
+.mines-around-5 {
+    color: var(--clr5);
+}
+
+.mines-around-6 {
+    color: var(--clr6);
+}
+
+.mines-around-7 {
+    color: var(--clr7);
+}
+
+.mines-around-8 {
+    color: var(--clr8);
+}
+
+.seat {
+    background-color: var(--seat);
+    cursor: pointer;
+    transition: 1s;
+}
+
+.selected {
+    background-color: var(--seat-selected);
+}
+
+.booked {
+    background-color: var(--seat-booked);
+}
+
+.seat.booked:hover {
+    background-color: var(--seat-booked-hover);
+    cursor: not-allowed;
+}
+
+.seat.highlighted {
+    background-color: var(--seat-highlighted);
+    border: var(--border-thin);
+}
+
+.popup {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+
+    background-color: var(--seat-selected);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: var(--box-shadow);
+}
+
+.popup .btn-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    background-color: var(--icons);
+    border: var(--border-thin);
+    color: var(--body-color);
+}
+
+.popup .btns-bottom {
+    justify-items: center;
+    align-items: center;
+}
+
+.popup .btns-bottom button {
+    margin-block: 5px;
+    cursor: pointer;
+}
+
+.popup .btn-book-seat {
+    font-size: 18px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.popup .btn-book-seat:active {
+    background-color: var(--active);
+}
+
+.popup .btn-highlight {
+    background-color: var(--icons);
+    border: none;
+    font-size: 50px;
+}
+
+.popup .btn-highlight:hover {
+    font-size: 60px;
+}
+
+.popup .btn-highlight:active {
+    font-size: 50px;
+}
