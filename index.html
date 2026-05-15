@@ -7,32 +7,88 @@
         <link rel="stylesheet" href="css/main.css">
     </head>
 
-    <body onload="onInit()" onpointerup="onKeyUpClicked(event)">
+    <body onload="onInit()">
     
         <header>Mine Sweeper</header>
 
         <div class="wrapper">
-            <table>
-                <tbody class="face-and-data">
-                    <tr>
-                        <td> <h3 class="unmarked-mines">Unmarked Mines: <span>0</span></h3> </td>
-                        <td class="face"> </td>
-                        <td> <h3 class="time">Time: <span>0</span>s</h3> </td>
-                    </tr>
-                </tbody>
+
+            <div class="lives"></div>
+
+            <div class="hints"></div>
+
+            <table class="btns-special">
+                <tr>
+                    <td>
+                        <div class="safe-click-container">
+                            <button class="btn btn-safe-click" onclick="onSafeClick()">
+                                <img src="images/safe-click.png" alt="safe click button">
+                            </button>
+
+                            <p><span>3</span> clicks available</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="undo-container">
+                            <button class="btn btn-undo" onclick="onUndoClick()">
+                                <img src="images/undo.png" alt="undo button">
+                            </button>
+
+                            <p><span>0</span> clicks available</p>
+                        </div>
+                    </td>
+                </tr>
             </table>
+            
+            <div class="btns-special">
+                <button class="btn btn-dark-light-mode" onclick="onDarkLightModeClick(this)">
+                    <img src="images/dark-mode.png" alt="dark mode button">
+                </button>
+            
+                <button  class="btn btn-manual-mode" onclick="onManualModeClick(this)">
+                    <img src="images/manual-mode.png" alt="manual mode button">
+                </button>
+    
+                <button class="btn btn-mega-hint" onclick="onMegaHintClick(this)">
+                    <img src="images/mega-hint.gif" alt="mega hint button">
+                </button>
 
+                <button class="btn btn-exterminate-mines" onclick="onExterminateMinesClick()">
+                    <img src="images/mine.png" alt="exterminate mines button">
+                </button>
+            </div>
+            
+            
+            <div class="face-and-data">
+                <span class="unmarked-mines"> <img src="images/flag.png" alt="flag"> : <span>0</span> </span>
+                <span class="face"> </span>
+                <span class="time"> <img src="images/clock.png" alt="clock"> : <span>0</span>s </span>
+            </div>
 
-            <div class="btns-container">
+            <div class="btns-levels">
                 <button class="btn btn-begginer" onclick="onLevelClick(this)">Begginer</button>
                 <button class="btn btn-medium" onclick="onLevelClick(this)">Medium</button>
                 <button class="btn btn-expert" onclick="onLevelClick(this)">Expert</button>
             </div>
-            
-            
-            
-            <table>
+
+            <table onpointerup="onKeyUpClicked(event)">
                 <tbody class="board"> </tbody>
+            </table>
+
+            <table class="scores">
+                <thead>
+                    <tr>
+                        <td colspan="2">Begginer</td>
+                        <td colspan="2">Medium</td>
+                        <td colspan="2">Expert</td>
+                    </tr>
+                    <tr>
+                        <td>Name</td> <td>Score</td>
+                        <td>Name</td> <td>Score</td>
+                        <td>Name</td> <td>Score</td>
+                    </tr>
+                </thead>
+                <tbody class="best-scores"></tbody>
             </table>
         </div>
 

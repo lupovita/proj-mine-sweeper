@@ -4,18 +4,43 @@
 
 :root {
     /* Meaningful names based on function, not just the color name */
-    --body-bg: #111;
-    --body-color: white;
-    --header-text-shadow: 3px 3px violet;
-    --seat: #761818;
-    --seat-selected: orange;
-    --seat-booked: red;
-    --seat-booked-hover: grey;
-    --seat-highlighted: skyblue;
-    --border-thin: 1px solid white;
-    --box-shadow: 5px 5px rgb(77, 211, 193);
-    --icons: transparent;
-    --active: purple;
+    --bdy-bg: linear-gradient(#9932CC, #1E90FF);
+    --bdy-clr: white;
+    --bdy-drk-mode-bg: black;
+    
+    --ftr-fs: 1.5rem;
+    --hdr-ftr-lh: 5vh;
+    --ftr-pad-blc: 1vh;
+    --hdr-ftr-bg: skyblue;
+    --hdr-txt-shdw: 0.2rem 0.2rem violet;
+
+    --wrpr-mrgn: 1vh;
+    
+    --fad-img-h: 3vh;
+    --fad-spn-mrgn: 2vh;
+    --fad-spn-fs: 1.7rem;
+    --fad-spn-drk-mode-bg: #BC8F8F;
+
+    --img-hover-diff: 0.2vh;
+
+    --lives-img-w: 4.5vh;
+    --lives-mrgn-inln: 1vh;
+
+    --btn-clicked-bg: #F08080;
+    --btn-dscrption-mrgn: 0.5vh;
+    --btn-mrgn: 1vh;
+    --btn-pad: 0.5vh 1vh;
+    --btn-fs: 1rem;
+    --btn-fw: 700;
+    --btn-brdr-rad: 1vh;
+
+    --revealed-bg: lightgrey;
+
+    --cell-bg: grey;
+    --cell-width: 4vh;
+    --cell-transition: 1s;
+
+    --scores-td-brdr: white 0.05vh solid;
     --clr1: blue;
     --clr2: green;
     --clr3: red;
@@ -28,66 +53,101 @@
 
 body {
     margin: 0;
-    background: var(--body-bg);
+    background: var(--bdy-bg);
     font-family: Arial, Helvetica, sans-serif;
-    color: var(--body-color);
+    color: var(--bdy-clr);
     text-align: center;
 }
 
+body.dark-mode {
+    background: var(--bdy-drk-mode-bg);
+}
 
 header, footer {
-    min-height: 5vh;
-
-    background-color: skyblue;
-    text-shadow: var(--header-text-shadow);
-    font-size: 1.5rem;
+    font-size: var(--ftr-fs);
+    line-height: var(--hdr-ftr-lh);
+    padding-block: var(--ftr-pad-blc);
+    background-color: var(--hdr-ftr-bg);
+    text-shadow: var(--hdr-txt-shdw);
     text-align: center;
-    line-height: 5vh;
 }
 
 header {
-    padding-block: 1vh;
-    line-height: 7vh;
-    font-size: 3rem;
+    font-size: calc(2 * var(--ftr-fs));
+    padding-block: calc(2 * var(--ftr-pad-blc));
 }
 
 .wrapper {
-    min-height: calc(100vh - 5vh - 2vh - 7vh - (2 * 30px));
-    /* background-color: whitesmoke; */
-    margin: 30px auto;
+    min-height: calc(100vh - 2*var(--hdr-ftr-lh) - 2*var(--ftr-pad-blc) - 4*var(--ftr-pad-blc) - 2*var(--wrpr-mrgn));
+    margin: var(--wrpr-mrgn) auto;
 }
 
+.face-and-data img {
+    height: var(--fad-img-h);
+}
 
-/* h1 {
-    text-align: center;
-    text-shadow: var(--header-text-shadow);
-    font-size: xxx-large;
-    margin:0;
-} */
+.face-and-data span.dark-mode {
+    background-color: var(--fad-spn-drk-mode-bg);
+}
 
-.face img {
-    width: 40px;
+.face-and-data > span {
+    margin: var(--fad-spn-mrgn);
+    font-size: var(--fad-spn-fs);
+}
+
+.face img, .hints img {
     cursor: pointer;
 }
 
 .face img:hover {
-    width: 50px;
+    height: calc(var(--fad-img-h) + var(--img-hover-diff));
 }
 
 .face img:active {
-    width: 40px;
+    height: var(--fad-img-h);
 }
 
-.btns-container {
+.lives img, .hints img {
+    width: var(--lives-img-w);
+    margin-inline: var(--lives-mrgn-inln);
+}
+
+.hints img:hover {
+    width: calc(var(--lives-img-w) + var(--img-hover-diff));
+}
+
+.hints img:active {
+    width: var(--lives-img-w);
+}
+
+.btns-levels {
     width: fit-content;
-    margin: 10px auto;
+    margin: 0 auto;
+}
+
+.btns-special img {
+    height: calc(var(--fad-img-h ) + 0.5vh);
+}
+
+.manual-mode, .mega-hint {
+    background-color: var(--btn-clicked-bg);
+}
+
+.safe-click-container p, .undo-container p {
+    margin: 0;
+}
+
+.btn-safe-click, .btn-undo {
+    margin-block-end: var(--btn-dscrption-mrgn);
 }
 
 button {
-    margin: 10px 10px;
-    padding: 5px 10px;
-    font-size: 15px;
-    font-weight: 700;
+    margin: var(--btn-mrgn);
+    padding: var(--btn-pad);
+    font-size: var(--btn-fs);
+    font-weight: var(--btn-fw);
+    cursor: pointer;
+    border-radius: var(--btn-brdr-rad);
 }
 
 button:hover {
@@ -95,28 +155,35 @@ button:hover {
 }
 
 table {
-    /* width: 400px; */
-    margin: 20px auto;
-    /* border-collapse: separate;
-    border-spacing: 10px; */
+    margin: 0 auto;
+    text-align: center;
 }
 
 .cell {
-    background-color: grey;
-    width: 45px;
-    height: 45px;
-    border-radius: 7px;
-    font-size: 20px;
-    font-weight: 700;
-    transition: 1s;
+    background-color: var(--cell-bg);
+    width: var(--cell-width);
+    height: var(--cell-width);
+    border-radius: var(--btn-brdr-rad);
+    font-size: var(--btn-fs);
+    font-weight: var(--btn-fw);
+    transition: var(--cell-transition);
 }
 
 .cell img {
-    height: 35px;
+    height: var(--fad-img-h);
 }
 
 .revealed {
-    background-color: lightgrey;
+    background-color: var(--revealed-bg);
+}
+
+.scores td{
+    border: var(--scores-td-brdr);
+    padding: var(--btn-pad);
+}
+
+.scores {
+    margin: var(--btn-mrgn) auto;
 }
 
 .mines-around-1 {
@@ -149,83 +216,4 @@ table {
 
 .mines-around-8 {
     color: var(--clr8);
-}
-
-.seat {
-    background-color: var(--seat);
-    cursor: pointer;
-    transition: 1s;
-}
-
-.selected {
-    background-color: var(--seat-selected);
-}
-
-.booked {
-    background-color: var(--seat-booked);
-}
-
-.seat.booked:hover {
-    background-color: var(--seat-booked-hover);
-    cursor: not-allowed;
-}
-
-.seat.highlighted {
-    background-color: var(--seat-highlighted);
-    border: var(--border-thin);
-}
-
-.popup {
-    position: absolute;
-    right: 20px;
-    top: 20px;
-
-    background-color: var(--seat-selected);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: var(--box-shadow);
-}
-
-.popup .btn-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-
-    background-color: var(--icons);
-    border: var(--border-thin);
-    color: var(--body-color);
-}
-
-.popup .btns-bottom {
-    justify-items: center;
-    align-items: center;
-}
-
-.popup .btns-bottom button {
-    margin-block: 5px;
-    cursor: pointer;
-}
-
-.popup .btn-book-seat {
-    font-size: 18px;
-    padding: 10px;
-    border-radius: 10px;
-}
-
-.popup .btn-book-seat:active {
-    background-color: var(--active);
-}
-
-.popup .btn-highlight {
-    background-color: var(--icons);
-    border: none;
-    font-size: 50px;
-}
-
-.popup .btn-highlight:hover {
-    font-size: 60px;
-}
-
-.popup .btn-highlight:active {
-    font-size: 50px;
 }

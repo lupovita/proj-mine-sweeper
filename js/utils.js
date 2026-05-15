@@ -1,61 +1,15 @@
 'use strict'
 
-function renderBoard(mat, selector) {
-
-    var strHTML = '<table border="0"><tbody>'
-    for (var i = 0; i < mat.length; i++) {
-
-        strHTML += '<tr>'
-        for (var j = 0; j < mat[0].length; j++) {
-            const cell = mat[i][j]
-            const className = `cell cell-${i}-${j} ${cell.type}`
-
-            strHTML += `<td class="${className}">${cell.content.dom}</td>`
-        }
-        strHTML += '</tr>'
-    }
-    strHTML += '</tbody></table>'
-    
-    const elContainer = document.querySelector(selector)
-    elContainer.innerHTML = strHTML
-}
-
-function renderCell(location, value) {
-    // Select the elCell and set the value
-    const elCell = document.querySelector(`.cell-${location.i}-${location.j}`)
-    elCell.innerHTML = value
-}
-
 function getCellElement(location) {
     return document.querySelector(`[data-i="${location.i}"][data-j="${location.j}"]`)
 }
 
-function showGameFinishedModal(msg) {
-    const elModal = document.querySelector('.game-finished-modal')
-    elModal.hidden = false
-    elModal.querySelector('h1').innerText = msg
-}
+function getRandomSpecificLocation(board, isSpecificLocationFunc) {
+	const specificLocations = getSpecificLocationsInBoard(board, isSpecificLocationFunc)
 
-function hideGameFinishedModal() {
-    // Hide Modal
-    const elModal = document.querySelector('.game-finished-modal')
-    elModal.hidden = true
-}
-
-function playAudio(audioSrc) {
-	const audio = new Audio(audioSrc)
-	audio.volume = 0.1
-	audio.play()
-}
-
-function getRandomAvailableLocation(board, isAvailableLocationFunc) {
-	const availableLocations = getAvailableLocationsInBoard(board, isAvailableLocationFunc)
-
-	if (availableLocations.length === 0) {
-		return null
-	}
-
-	return getRandomLocation(availableLocations)
+	if (specificLocations.length === 0) return null
+	
+	return getRandomLocation(specificLocations)
 }
 
 function getRandomLocation(locations) {
@@ -64,31 +18,19 @@ function getRandomLocation(locations) {
 	return locations[randIdx]
 }
 
-function getAvailableLocationsInBoard(board, isAvailableLocationFunc) {
+function getSpecificLocationsInBoard(board, isSpecificLocationFunc) {
 	const res = []
 
 	for (var i = 0; i < board.length; i++) {
 		for (var j = 0; j < board[0].length; j++) {
 			const location = {i, j}
 
-			if (isAvailableLocationFunc(location, board)) {
+			if (isSpecificLocationFunc(location, board)) {
 				res.push(location)
 			}
 		}
 	}
 	return res
-}
-
-function isFoodOrEmptyLocation(location, board) {
-	const cell = board[location.i][location.j]
-
-	return cell.content.type === TYPES.foodType || isEmptyLocation(location, board)
-}
-
-function isEmptyLocation(location, board) {
-	const cell = board[location.i][location.j]
-
-	return cell.content.type === TYPES.emptyType && cell.type === FLOOR
 }
 
 function forEachNeg(mat, rowInd, colInd, func) {
@@ -116,6 +58,14 @@ function forEachNeg(mat, rowInd, colInd, func) {
     // }
 }
 
+function forEach(mat, func, startRow=0, endRow=mat.length - 1, startCol=0, endCol=mat[0].length - 1) {
+    for (var i = startRow; i <= endRow; i++) {
+        for (var j = startCol; j <= endCol; j++) {
+            func(mat[i][j], {i, j})
+        }
+    }
+}
+
 function isNeg(location1, location2, mat) {
 	const verticalDiff = Math.abs(location1.i - location2.i)
 	const horizontalDiff = Math.abs(location1.j - location2.j)
@@ -128,8 +78,4 @@ function isNeg(location1, location2, mat) {
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
-}
-
-function getRandomIntInclusive(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
