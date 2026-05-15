@@ -21,8 +21,8 @@ function getRandomLocation(locations) {
 function getSpecificLocationsInBoard(board, isSpecificLocationFunc) {
 	const res = []
 
-	for (var i = 0; i < board.length; i++) {
-		for (var j = 0; j < board[0].length; j++) {
+	for (let i = 0; i < board.length; i++) {
+		for (let j = 0; j < board[0].length; j++) {
 			const location = {i, j}
 
 			if (isSpecificLocationFunc(location, board)) {
@@ -34,13 +34,13 @@ function getSpecificLocationsInBoard(board, isSpecificLocationFunc) {
 }
 
 function forEachNeg(mat, rowInd, colInd, func) {
-    for (var i = rowInd - 1; i <= rowInd + 1; i++) {
+    for (let i = rowInd - 1; i <= rowInd + 1; i++) {
         if (i < 0 || i >= mat.length) continue
-        for (var j = colInd - 1; j <= colInd + 1; j++) {
+        for (let j = colInd - 1; j <= colInd + 1; j++) {
             if (j < 0 || j >= mat[0].length) continue
             if (i === rowInd && j === colInd) continue
-
-            func(mat[i][j], {i, j})
+            const cell = mat[i][j]
+            func(cell, {i, j})
         }
     }
     // Secret passage check
@@ -59,9 +59,10 @@ function forEachNeg(mat, rowInd, colInd, func) {
 }
 
 function forEach(mat, func, startRow=0, endRow=mat.length - 1, startCol=0, endCol=mat[0].length - 1) {
-    for (var i = startRow; i <= endRow; i++) {
-        for (var j = startCol; j <= endCol; j++) {
-            func(mat[i][j], {i, j})
+    for (let i = startRow; i <= endRow; i++) {
+        for (let j = startCol; j <= endCol; j++) {
+            const cell = mat[i][j]
+            func(cell, {i, j})
         }
     }
 }

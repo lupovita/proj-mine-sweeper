@@ -35,12 +35,13 @@
     --btn-brdr-rad: 1vh;
 
     --revealed-bg: lightgrey;
+    --highlight-bg: coral;
 
     --cell-bg: grey;
     --cell-width: 4vh;
     --cell-transition: 1s;
 
-    --scores-td-brdr: white 0.05vh solid;
+    --bst-scores-td-brdr: white 0.05vh solid;
     --clr1: blue;
     --clr2: green;
     --clr3: red;
@@ -150,6 +151,18 @@ button {
     border-radius: var(--btn-brdr-rad);
 }
 
+button.unclickable {
+    cursor: not-allowed;
+}
+
+.hints img.unclickable {
+    cursor: not-allowed;
+}
+
+.highlight {
+    background-color: var(--highlight-bg);
+}
+
 button:hover {
     background-color: var(--clr8);
 }
@@ -167,6 +180,11 @@ table {
     font-size: var(--btn-fs);
     font-weight: var(--btn-fw);
     transition: var(--cell-transition);
+    cursor: pointer;
+}
+
+.cell:hover {
+    background-color: var(--revealed-bg);
 }
 
 .cell img {
@@ -175,14 +193,19 @@ table {
 
 .revealed {
     background-color: var(--revealed-bg);
+    cursor: default;
 }
 
-.scores td{
-    border: var(--scores-td-brdr);
+.marked {
+    cursor: default;
+}
+
+.best-scores td{
+    border: var(--bst-scores-td-brdr);
     padding: var(--btn-pad);
 }
 
-.scores {
+.best-scores {
     margin: var(--btn-mrgn) auto;
 }
 

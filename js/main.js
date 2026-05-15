@@ -49,7 +49,11 @@ var gGameMoves;
 var gIsManualModeOn;
 var gMegaHintMode;
 
-
+// TODO: split the js code into organized files: main.js, board.js, globals.js, button-clicks.js, helper-functions.js, 
+//       buttons-active-state.js
+// TODO: split css code into files: main.css, board.css, btns-special.css, header-footer.css, best-scores.css, 
+//       face-and-data.css, dark-mode.css, lives-and-hints.css.
+// TODO: megaHintMode: when gMegaHintMode is on, when gMegaHintMode.locations.length > 0: add '.highlight' class to all the cells between the cell being hovered to the cell saved in locations in the function onCellHovered(this).
 function onInit() {
     gStartTime = 0;
     gIsHintClicked = false;
@@ -73,6 +77,7 @@ function onInit() {
     gBoard = buildCleanBoard();
     gGameMoves = [];
     renderAll();
+    handleButtonsActiveState();
 }
 
 function resetManualMode() {
@@ -87,12 +92,97 @@ function resetMegaHint() {
     elBtn.classList.remove('mega-hint');
 }
 
+function handleButtonsActiveState() {
+    // unclickable before game starts: hint, safe-click, undo, mega-hint, exterminate.
+    if (!gGame.isOn && gStartTime === 0) handleButtonsActivateStateBeforeGameStarts();
+
+    else if (gGame.isOn) handleButtonsActiveStateWhenGameIsOn();
+
+    else if (isGameFinished()) handleButtonsActiveStateWhenGameIsFinished();
+}
+
+function handleButtonsActivateStateBeforeGameStarts() {
+    for (const elHint of document.querySelectorAll('.hints img')) {
+        elHint.classList.add('unclickable');
+    }
+
+    for (const elBtn of document.querySelectorAll('.btns-special .btn')) {
+        if (elBtn.classList.contains('btn-dark-light-mode')) continue;
+        else if (elBtn.classList.contains('btn-manual-mode')) elBtn.classList.remove('unclickable');
+        else elBtn.classList.add('unclickable');
+    }
+
+    for (const elBtn of document.querySelectorAll('.btns-levels .btn')) {
+        elBtn.classList.remove('unclickable');
+    }
+}
+
+function handleButtonsActivationAfterGameStarts() {
+    for (const elBtn of document.querySelectorAll('.btns-special .btn')) {
+        if (elBtn.classList.contains('btn-dark-light-mode')) continue;
+        else if (elBtn.classList.contains('btn-manual-mode')) elBtn.classList.add('unclickable');
+        else elBtn.classList.remove('unclickable');
+    }
+
+    for (const elBtn of document.querySelectorAll('.btns-levels .btn')) {
+        elBtn.classList.add('unclickable');
+    }
+}
+
+function handleButtonsActiveStateWhenGameIsOn() {
+    handleButtonsActivationAfterGameStarts();
+
+    if (gIsHintClicked) {
+        for (const elHint of document.querySelectorAll('.hints img')) {
+            if (elHint.src.includes(HINT_OFF_SRC)) elHint.classList.add('unclickable');
+        }
+    }
+    else {
+        for (const elHint of document.querySelectorAll('.hints img')) {
+            elHint.classList.remove('unclickable');
+        }
+    }
+
+    if (gGame.safeClicks === 0) addUnclickable('.btn-safe-click');
+    else removeUnclickable('.btn-safe-click');
+
+    if (gGame.moves === 0) addUnclickable('.btn-undo');
+    else removeUnclickable('.btn-undo');
+
+    if (gMegaHintMode.isUsed) addUnclickable('.btn-mega-hint');
+
+    if (gGame.minesCount === 0) addUnclickable('.btn-exterminate-mines');
+}
+
+function handleButtonsActiveStateWhenGameIsFinished() {
+    for (const elHint of document.querySelectorAll('.hints img')) {
+        elHint.classList.add('unclickable');
+    }
+
+    for (const elBtn of document.querySelectorAll('.btns-special .btn')) {
+        if (elBtn.classList.contains('btn-dark-light-mode')) continue;
+        elBtn.classList.add('unclickable');
+    }
+
+    for (const elBtn of document.querySelectorAll('.btns-levels .btn')) {
+        elBtn.classList.remove('unclickable');
+    }
+}
+
+function addUnclickable(selector) {
+    document.querySelector(selector).classList.add('unclickable');
+}
+
+function removeUnclickable(selector) {
+    document.querySelector(selector).classList.remove('unclickable');
+}
+
 function buildCleanBoard() {
     const board = [];
 
-    for (var i = 0; i < gLevel.SIZE; i++) {
+    for (let i = 0; i < gLevel.SIZE; i++) {
         board.push([]);
-        for (var j = 0; j < gLevel.SIZE; j++) {
+        for (let j = 0; j < gLevel.SIZE; j++) {
             const cell = {
                 minesAroundCount: 0,
                 isRevealed: false,
@@ -116,11 +206,11 @@ function fillBoard(board, clickedCellLocation) {
 }
 
 function renderBoard() {
-    var strHTML = '';
+    let strHTML = '';
     
-    for (var i = 0; i < gBoard.length; i++) {
+    for (let i = 0; i < gBoard.length; i++) {
         strHTML += `<tr>\n`;
-        for (var j = 0; j < gBoard[0].length; j++) {
+        for (let j = 0; j < gBoard[0].length; j++) {
             const cell = gBoard[i][j];
             const className = getClassName(cell);
             strHTML += `\t<td 
@@ -349,12 +439,14 @@ function onHintClick(elHint) {
     if (elHint.src.includes(HINT_ON_SRC)) {
         elHint.src = HINT_OFF_SRC;
         gIsHintClicked = false;
+        handleButtonsActiveState();
         return;
     }
     if (gIsHintClicked) return;
     
     elHint.src = HINT_ON_SRC;
     gIsHintClicked = true;
+    handleButtonsActiveState();
 }
 
 function onSafeClick() {
@@ -368,6 +460,7 @@ function onSafeClick() {
     const elCell = getCellElement(safeLocation);
     revealCell(elCell, cell);
     gSafeClickTimeoutid = setTimeout(unrevealCell, SAFE_CLICK_TIMEOUT, elCell, cell);
+    handleButtonsActiveState();
 }
 
 function onUndoClick() {
@@ -405,7 +498,7 @@ function onMegaHintClick(elBtn) {
 
 function onExterminateMinesClick() {
     if (!gGame.isOn) return;
-    for (var i = 0; i < EXTERMINATE_MINES_AMOUNT; i++) {
+    for (let i = 0; i < EXTERMINATE_MINES_AMOUNT; i++) {
         const isMineLocationFunc = (location, board) => board[location.i][location.j].isMine;
         const mineLocation = getRandomSpecificLocation(gBoard, isMineLocationFunc);
         if (!mineLocation) break;
@@ -415,6 +508,7 @@ function onExterminateMinesClick() {
     setMinesNegsCount(gBoard);
     renderBoard();
     updateMarkedMines(0)
+    handleButtonsActiveState();
 }
 
 function checkGameFinished(elCell, clickedCell, isClickedMine) {
@@ -427,11 +521,13 @@ function updateGameMoves(gameMovesDiff) {
         gGameMoves.push({board: copyBoard(gBoard), game: copyGame(gGame)});
         gGame.moves += gameMovesDiff;
         updateUndoClicks();
+        handleButtonsActiveState()
     } else {
         const gameMove = gGameMoves.pop();
         gBoard = gameMove.board;
         gGame = gameMove.game;
         renderAll();
+        handleButtonsActiveState()
     }
 }
 
@@ -441,20 +537,20 @@ function updateUndoClicks() {
 }
 
 function countRevealedCells(board) {
-    var count = 0;
+    let count = 0;
     forEach(board, (cell) => count += cell.isRevealed ? 1 : 0);
     return count;
 }
 
 function countMarkedCells(board) {
-    var count = 0;
+    let count = 0;
     forEach(board, (cell) => count += cell.isMarked ? 1 : 0);
     return count;
 }
 
 function expandReveal(board, elCell, i, j) {
-    var revealNegs = (cell, location) => {
-            if (!cell.isRevealed && !cell.isMine) {
+    let revealNegs = (cell, location) => {
+            if (!cell.isRevealed && !cell.isMine && !cell.isMarked) {
                 const elCell = getCellElement(location);
                 revealCell(elCell, cell);
                 if (cell.minesAroundCount === 0) expandReveal(board, elCell, location.i, location.j);
@@ -494,17 +590,19 @@ function markCell(elCell, cell) {
     if (cell.isMarked) return;
     cell.isMarked = true;
     elCell.innerHTML = getCellInnerHTML(cell);
+    elCell.classList.add('marked');
     updateMarkedMines(1);
 }
 
 function unmarkCell(elCell, cell) {
     cell.isMarked = false;
     elCell.innerHTML = getCellInnerHTML(cell);
+    elCell.classList.remove('marked');
     updateMarkedMines(-1);
 }
 
 function fillBoardWithMines(board, isAvailableLocationFunc, minesAmount) {
-    for (var i = 0; i < minesAmount; i++) {
+    for (let i = 0; i < minesAmount; i++) {
         const availableLocation = getRandomSpecificLocation(board, isAvailableLocationFunc);
         if (!availableLocation) break;
         board[availableLocation.i][availableLocation.j].isMine = true;
@@ -513,11 +611,12 @@ function fillBoardWithMines(board, isAvailableLocationFunc, minesAmount) {
 }
 
 function setMinesNegsCount(board) {
-    for (var i = 0; i < board.length; i++) {
-        for (var j = 0; j < board[0].length; j++) {
-            var count = 0;
+    for (let i = 0; i < board.length; i++) {
+        for (let j = 0; j < board[0].length; j++) {
+            let count = 0;
             forEachNeg(board, i, j, (cell) => count += cell.isMine ? 1 : 0);
-            board[i][j].minesAroundCount = count;
+            const cell = board[i][j];
+            cell.minesAroundCount = count;
         }
     }
 }
@@ -558,6 +657,7 @@ function handleMineClick(elCell, clickedCell) {
         revealAllMines();
         clearInterval(gTimerIntervalId);
         gGame.isOn = false;
+        handleButtonsActiveState();
     }
 
 }
@@ -574,6 +674,7 @@ function handleGameWon() {
     gGame.isOn = false;
     handleBestScore();
     renderBestScoresBoard();
+    handleButtonsActiveState();
 }
 
 function handleHint(elCell, clickedCell) {
@@ -581,6 +682,7 @@ function handleHint(elCell, clickedCell) {
     gHintTimeoutId = setTimeout(unrevealCell, HINT_CLICK_TIMEOUT, elCell, clickedCell);
     updateHints(-1);
     gIsHintClicked = false;
+    handleButtonsActiveState();
 }
 
 function handleBestScore() {
@@ -606,19 +708,19 @@ function getLevelString(level) {
 }
 
 function renderBestScoresBoard() {
-    var strHTML = '<tr>';
-    strHTML += getRenderBestScoresLevel('Begginer');
-    strHTML += getRenderBestScoresLevel('Medium');
-    strHTML += getRenderBestScoresLevel('Expert');
+    let strHTML = '<tr>';
+    strHTML += getBestScoresByLevelHTML('Begginer');
+    strHTML += getBestScoresByLevelHTML('Medium');
+    strHTML += getBestScoresByLevelHTML('Expert');
     strHTML += '</tr>'
     
-    const elBestScores = document.querySelector('.best-scores');
+    const elBestScores = document.querySelector('.best-scores tbody');
     elBestScores.innerHTML = strHTML;
 }
 
-function getRenderBestScoresLevel(levelStr) {
-    var name = localStorage.getItem(`${levelStr} name`);
-    var score = localStorage.getItem(`${levelStr} score`);
+function getBestScoresByLevelHTML(levelStr) {
+    let name = localStorage.getItem(`${levelStr} name`);
+    let score = localStorage.getItem(`${levelStr} score`);
     if (name === null || score === null) name = '', score = '';
     else score = +score;
     return `<td>${name}</td> <td>${score}</td>`;
