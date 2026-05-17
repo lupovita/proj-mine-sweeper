@@ -1,0 +1,21 @@
+.face-and-data img {
+    height: var(--fad-img-h);
+}
+
+.face-and-data>span {
+    margin: var(--fad-spn-mrgn);
+    font-size: var(--fad-spn-fs);
+}
+
+.face img,
+.hints img {
+    cursor: pointer;
+}
+
+.face img:hover {
+    height: calc(var(--fad-img-h) + var(--img-hover-diff));
+}
+
+.face img:active {
+    height: var(--fad-img-h);
+}

@@ -33,7 +33,7 @@ function resetManualMode() {
 }
 
 function resetMegaHint() {
-    gMegaHintMode = {locations: [], isOn: false, isUsed: false};
+    gMegaHintMode = { locations: [], isOn: false, isUsed: false };
     const elBtn = document.querySelector('.btn-mega-hint');
     elBtn.classList.remove('mega-hint');
 }
@@ -103,7 +103,7 @@ function updateUndoClicks() {
 
 function updateGameMoves(gameMovesDiff) {
     if (gameMovesDiff >= 0) {
-        gGameMoves.push({board: copyBoard(gBoard), game: copyGame(gGame)});
+        gGameMoves.push({ board: copyBoard(gBoard), game: copyGame(gGame) });
         gGame.moves += gameMovesDiff;
         updateUndoClicks();
         handleButtonsActiveState()

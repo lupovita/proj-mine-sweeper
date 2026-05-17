@@ -1,0 +1,17 @@
+.lives img,
+.hints img {
+    width: var(--lives-img-w);
+    margin-inline: var(--lives-mrgn-inln);
+}
+
+.hints img:hover {
+    width: calc(var(--lives-img-w) + var(--img-hover-diff));
+}
+
+.hints img:active {
+    width: var(--lives-img-w);
+}
+
+.hints img.unclickable {
+    cursor: not-allowed;
+}

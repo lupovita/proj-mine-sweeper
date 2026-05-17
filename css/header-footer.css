@@ -1,0 +1,14 @@
+header,
+footer {
+    font-size: var(--ftr-fs);
+    line-height: var(--hdr-ftr-lh);
+    padding-block: var(--ftr-pad-blc);
+    background-color: var(--hdr-ftr-bg);
+    text-shadow: var(--hdr-txt-shdw);
+    text-align: center;
+}
+
+header {
+    font-size: calc(2 * var(--ftr-fs));
+    padding-block: calc(2 * var(--ftr-pad-blc));
+}

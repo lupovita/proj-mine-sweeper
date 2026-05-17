@@ -1,0 +1,8 @@
+.best-scores td {
+    border: var(--bst-scores-td-brdr);
+    padding: var(--btn-pad);
+}
+
+.best-scores {
+    margin: var(--btn-mrgn) auto;
+}

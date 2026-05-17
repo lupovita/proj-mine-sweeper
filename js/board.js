@@ -52,7 +52,7 @@ function setMinesNegsCount(board) {
 
 function renderBoard() {
     let strHTML = '';
-    
+
     for (let i = 0; i < gBoard.length; i++) {
         strHTML += `<tr>\n`;
         for (let j = 0; j < gBoard[0].length; j++) {
@@ -123,29 +123,29 @@ function unshowNegs(elCell, i, j) {
     const cell = gBoard[i][j];
     if (!cell.isRevealed) elCell.classList.remove('revealed');
     forEachNeg(gBoard, i, j, (cell, location) => {
-            if (!cell.isRevealed) getCellElement(location).classList.remove('revealed');
-        });
+        if (!cell.isRevealed) getCellElement(location).classList.remove('revealed');
+    });
 }
 
 function revealAllMines() {
     forEach(gBoard, (cell, location) =>
-            (cell.isMine && !cell.isRevealed) ? revealCell(getCellElement(location), cell): null);
+        (cell.isMine && !cell.isRevealed) ? revealCell(getCellElement(location), cell) : null);
 }
 
 function markAllMines() {
     if (gGame.markedCount === gGame.minesCount) return;
     forEach(gBoard, (cell, location) =>
-            (cell.isMine && !cell.isMarked) ? markCell(getCellElement(location), cell): null);
+        (cell.isMine && !cell.isMarked) ? markCell(getCellElement(location), cell) : null);
 }
 
 function expandReveal(board, elCell, i, j) {
     let revealNegs = (cell, location) => {
-            if (!cell.isRevealed && !cell.isMine && !cell.isMarked) {
-                const elCell = getCellElement(location);
-                revealCell(elCell, cell);
-                if (cell.minesAroundCount === 0) expandReveal(board, elCell, location.i, location.j);
-            }
-        };
+        if (!cell.isRevealed && !cell.isMine && !cell.isMarked) {
+            const elCell = getCellElement(location);
+            revealCell(elCell, cell);
+            if (cell.minesAroundCount === 0) expandReveal(board, elCell, location.i, location.j);
+        }
+    };
     forEachNeg(board, i, j, revealNegs);
 }
 

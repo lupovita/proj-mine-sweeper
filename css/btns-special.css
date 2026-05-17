@@ -1,0 +1,18 @@
+.btns-special img {
+    height: calc(var(--fad-img-h) + 0.5vh);
+}
+
+.manual-mode,
+.mega-hint {
+    background-color: var(--btn-clicked-bg);
+}
+
+.safe-click-container p,
+.undo-container p {
+    margin: 0;
+}
+
+.btn-safe-click,
+.btn-undo {
+    margin-block-end: var(--btn-dscrption-mrgn);
+}

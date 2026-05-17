@@ -1,0 +1,63 @@
+.cell {
+    background-color: var(--cell-bg);
+    width: var(--cell-width);
+    height: var(--cell-width);
+    border-radius: var(--btn-brdr-rad);
+    font-size: var(--btn-fs);
+    font-weight: var(--btn-fw);
+    transition: var(--cell-transition);
+    cursor: pointer;
+}
+
+.cell:hover {
+    background-color: var(--revealed-bg);
+}
+
+.cell img {
+    height: var(--fad-img-h);
+}
+
+.revealed {
+    background-color: var(--revealed-bg);
+    cursor: default;
+}
+
+.highlight {
+    background-color: var(--highlight-bg);
+}
+
+.marked {
+    cursor: default;
+}
+
+.mines-around-1 {
+    color: var(--clr1);
+}
+
+.mines-around-2 {
+    color: var(--clr2);
+}
+
+.mines-around-3 {
+    color: var(--clr3);
+}
+
+.mines-around-4 {
+    color: var(--clr4);
+}
+
+.mines-around-5 {
+    color: var(--clr5);
+}
+
+.mines-around-6 {
+    color: var(--clr6);
+}
+
+.mines-around-7 {
+    color: var(--clr7);
+}
+
+.mines-around-8 {
+    color: var(--clr8);
+}

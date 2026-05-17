@@ -5,7 +5,7 @@ function handleBestScore() {
     if (bestScore !== null && gGame.secsPassed >= +bestScore) return;
 
     const userName = prompt('Congrats! you got the best score! what is your name?');
-    if (typeof(Storage) !== "undefined") {
+    if (typeof (Storage) !== "undefined") {
         localStorage.setItem(`${getLevelString(gLevel)} name`, userName);
         localStorage.setItem(`${getLevelString(gLevel)} score`, `${gGame.secsPassed}`);
     } else {
@@ -28,7 +28,7 @@ function renderBestScoresBoard() {
     strHTML += getBestScoresByLevelHTML('Medium');
     strHTML += getBestScoresByLevelHTML('Expert');
     strHTML += '</tr>'
-    
+
     const elBestScores = document.querySelector('.best-scores tbody');
     elBestScores.innerHTML = strHTML;
 }

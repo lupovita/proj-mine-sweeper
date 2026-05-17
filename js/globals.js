@@ -1,9 +1,9 @@
 'use strict'
 
 const LEVELS = {
-    BEGGINER: {SIZE: 4, MINES: 2},
-    MEDIUM: {SIZE: 8, MINES: 14},
-    EXPERT: {SIZE: 12, MINES: 32}
+    BEGGINER: { SIZE: 4, MINES: 2 },
+    MEDIUM: { SIZE: 8, MINES: 14 },
+    EXPERT: { SIZE: 12, MINES: 32 }
 };
 
 const CLASS_BEGGINER = 'btn-begginer', CLASS_MEDIUM = 'btn-medium', CLASS_EXPERT = 'btn-expert';
@@ -49,7 +49,7 @@ var gGameMoves;
 var gIsManualModeOn;
 var gMegaHintMode;
 
-function getImgHTML(imgName, fileType, onClickFunc=null, title=null) {
+function getImgHTML(imgName, fileType, onClickFunc = null, title = null) {
     const onClickHTML = onClickFunc ? `onclick="${onClickFunc}"` : '';
     const titleHTML = title ? `title="${title}"` : '';
     return `<img src="images/${imgName}.${fileType}" ${onClickHTML} ${titleHTML}>`;

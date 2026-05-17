@@ -4,9 +4,9 @@ function onCellEntered(i, j) {
     if (gMegaHintMode.locations.length > 0) {
         // unhighlight all cells before highlighting the current area:
         clearHighlightedCells();
-        
+
         // highlight the area between the first click and the current cell hovered:
-        const location1 = gMegaHintMode.locations[0], location2 = {i, j};
+        const location1 = gMegaHintMode.locations[0], location2 = { i, j };
         const highlightFunc = (cell, location) => getCellElement(location).classList.add('highlight');
         manipulateAreaBetweenLocations(gBoard, location1, location2, highlightFunc);
     }
@@ -43,15 +43,15 @@ function onCellClicked(elCell, i, j) {
     }
 
     if (gMegaHintMode.isOn) {
-        handleMegaHint({i, j});
+        handleMegaHint({ i, j });
         return;
     }
 
     if (clickedCell.isRevealed || clickedCell.isMarked) return;
 
     if (!gGame.isOn) {
-        startGame({i, j});
-        elCell = getCellElement({i, j});
+        startGame({ i, j });
+        elCell = getCellElement({ i, j });
     }
 
     updateGameMoves(1);
@@ -95,7 +95,7 @@ function onHintClick(elHint) {
         return;
     }
     if (gIsHintClicked) return;
-    
+
     elHint.src = HINT_ON_SRC;
     gIsHintClicked = true;
     handleButtonsActiveState();

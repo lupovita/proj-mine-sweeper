@@ -1,0 +1,7 @@
+body.dark-mode {
+    background: var(--bdy-drk-mode-bg);
+}
+
+.face-and-data span.dark-mode {
+    background-color: var(--fad-spn-drk-mode-bg);
+}
