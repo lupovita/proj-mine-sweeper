@@ -67,6 +67,14 @@ function forEach(mat, func, startRow=0, endRow=mat.length - 1, startCol=0, endCo
     }
 }
 
+function manipulateAreaBetweenTwoLocations(mat, location1, location2, func) {
+        const startRow = Math.min(location1.i, location2.i);
+        const endRow = Math.max(location1.i, location2.i);
+        const startCol = Math.min(location1.j, location2.j);
+        const endCol = Math.max(location1.j, location2.j);
+        forEach(mat, func, startRow, endRow, startCol, endCol);
+}
+
 function isNeg(location1, location2, mat) {
 	const verticalDiff = Math.abs(location1.i - location2.i)
 	const horizontalDiff = Math.abs(location1.j - location2.j)
