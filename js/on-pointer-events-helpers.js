@@ -1,7 +1,7 @@
 'use strict'
 
-function handleMegaHint(clickedCellLocation) {
-    gMegaHintMode.locations.push(clickedCellLocation);
+function handleMegaHint(clickedCellLoc) {
+    gMegaHintMode.locations.push(clickedCellLoc);
     if (gMegaHintMode.locations.length < 2) return;
 
     updateGameMoves(0);
@@ -9,7 +9,7 @@ function handleMegaHint(clickedCellLocation) {
     const location1 = gMegaHintMode.locations[0], location2 = gMegaHintMode.locations[1];
     const revealFunc = (cell, location) => revealCell(getCellElement(location), cell);
 
-    manipulateAreaBetweenTwoLocations(gBoard, location1, location2, revealFunc);
+    manipulateAreaBetweenLocations(gBoard, location1, location2, revealFunc);
 
     setTimeout(onUndoClick, MEGA_HINT_CLICK_TIMEOUT);
 
@@ -30,7 +30,6 @@ function handleMineClick(elCell, clickedCell) {
         gGame.isOn = false;
         handleButtonsActiveState();
     }
-
 }
 
 function renderMineClickEvent(elCell, clickedCell) {

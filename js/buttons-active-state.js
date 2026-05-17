@@ -19,10 +19,6 @@ function handleButtonsActivateStateBeforeGameStarts() {
         else if (elBtn.classList.contains('btn-manual-mode')) elBtn.classList.remove('unclickable');
         else elBtn.classList.add('unclickable');
     }
-
-    for (const elBtn of document.querySelectorAll('.btns-levels .btn')) {
-        elBtn.classList.remove('unclickable');
-    }
 }
 
 function handleButtonsActivationAfterGameStarts() {
@@ -30,10 +26,6 @@ function handleButtonsActivationAfterGameStarts() {
         if (elBtn.classList.contains('btn-dark-light-mode')) continue;
         else if (elBtn.classList.contains('btn-manual-mode')) elBtn.classList.add('unclickable');
         else elBtn.classList.remove('unclickable');
-    }
-
-    for (const elBtn of document.querySelectorAll('.btns-levels .btn')) {
-        elBtn.classList.add('unclickable');
     }
 }
 
@@ -70,10 +62,6 @@ function handleButtonsActiveStateWhenGameIsFinished() {
     for (const elBtn of document.querySelectorAll('.btns-special .btn')) {
         if (elBtn.classList.contains('btn-dark-light-mode')) continue;
         elBtn.classList.add('unclickable');
-    }
-
-    for (const elBtn of document.querySelectorAll('.btns-levels .btn')) {
-        elBtn.classList.remove('unclickable');
     }
 }
 

@@ -1,105 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Mine Sweeper</title>
-        <link rel="stylesheet" href="css/main.css">
-    </head>
 
-    <body onload="onInit()">
-    
-        <header>Mine Sweeper</header>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mine Sweeper</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
 
-        <div class="wrapper">
+<body onload="onInit()">
 
-            <div class="lives"></div>
+    <header>Mine Sweeper</header>
 
-            <div class="hints"></div>
+    <div class="wrapper">
 
-            <table class="btns-special">
-                <tr>
-                    <td>
-                        <div class="safe-click-container">
-                            <button class="btn btn-safe-click" onclick="onSafeClick()">
-                                <img src="images/safe-click.png" alt="safe click button">
-                            </button>
+        <div class="lives"></div>
 
-                            <p><span>3</span> clicks available</p>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="undo-container">
-                            <button class="btn btn-undo" onclick="onUndoClick()">
-                                <img src="images/undo.png" alt="undo button">
-                            </button>
+        <div class="hints"></div>
 
-                            <p><span>0</span> clicks available</p>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-            
-            <div class="btns-special">
-                <button class="btn btn-dark-light-mode" onclick="onDarkLightModeClick(this)">
-                    <img src="images/dark-mode.png" alt="dark mode button">
-                </button>
-            
-                <button  class="btn btn-manual-mode" onclick="onManualModeClick(this)">
-                    <img src="images/manual-mode.png" alt="manual mode button">
-                </button>
-    
-                <button class="btn btn-mega-hint" onclick="onMegaHintClick(this)">
-                    <img src="images/mega-hint.gif" alt="mega hint button">
-                </button>
+        <table class="btns-special">
+            <tr>
+                <td>
+                    <div class="safe-click-container">
+                        <button title="Safe Click: reveals a cell without a mine for 1.5s" class="btn btn-safe-click"
+                            onclick="onSafeClick()">
+                            <img src="images/safe-click.png" alt="safe click button">
+                        </button>
 
-                <button class="btn btn-exterminate-mines" onclick="onExterminateMinesClick()">
-                    <img src="images/mine.png" alt="exterminate mines button">
-                </button>
-            </div>
-            
-            
-            <div class="face-and-data">
-                <span class="unmarked-mines"> <img src="images/flag.png" alt="flag"> : <span>0</span> </span>
-                <span class="face"> </span>
-                <span class="time"> <img src="images/clock.png" alt="clock"> : <span>0</span>s </span>
-            </div>
+                        <p><span>3</span> clicks available</p>
+                    </div>
+                </td>
+                <td>
+                    <div class="undo-container">
+                        <button title="Undo: Sets the game 1 step backwards" class="btn btn-undo"
+                            onclick="onUndoClick()">
+                            <img src="images/undo.png" alt="undo button">
+                        </button>
 
-            <div class="btns-levels">
-                <button class="btn btn-begginer" onclick="onLevelClick(this)">Begginer</button>
-                <button class="btn btn-medium" onclick="onLevelClick(this)">Medium</button>
-                <button class="btn btn-expert" onclick="onLevelClick(this)">Expert</button>
-            </div>
+                        <p><span>0</span> clicks available</p>
+                    </div>
+                </td>
+            </tr>
+        </table>
 
-            <table onpointerup="onKeyUpClicked(event)">
-                <tbody class="board"></tbody>
-            </table>
+        <div class="btns-special">
+            <button title="Toggles dark and light modes" class="btn btn-dark-light-mode"
+                onclick="onDarkLightModeClick(this)">
+                <img src="images/dark-mode.png" alt="dark mode button">
+            </button>
 
-            <table class="best-scores">
-                <thead>
-                    <tr>
-                        <td colspan="2">Begginer</td>
-                        <td colspan="2">Medium</td>
-                        <td colspan="2">Expert</td>
-                    </tr>
-                    <tr>
-                        <td>Name</td> <td>Score</td>
-                        <td>Name</td> <td>Score</td>
-                        <td>Name</td> <td>Score</td>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+            <button title="Manual Mode: Place mines on the board, stop adding mines by clicking this button again"
+                class="btn btn-manual-mode" onclick="onManualModeClick(this)">
+                <img src="images/manual-mode.png" alt="manual mode button">
+            </button>
+
+            <button title="Mega Hint: Click on 2 locations on the board to reveal an area for 2s"
+                class="btn btn-mega-hint" onclick="onMegaHintClick(this)">
+                <img src="images/mega-hint.gif" alt="mega hint button">
+            </button>
+
+            <button title="Exterminator: Deletes 3 random mines from the board" class="btn btn-exterminate-mines"
+                onclick="onExterminateMinesClick()">
+                <img src="images/mine.png" alt="exterminate mines button">
+            </button>
         </div>
 
-        <footer>Developed by Avi Lupovitch</footer>
-        <script src="js/utils.js"></script>
-        <script src="js/globals.js"></script>
-        <script src="js/buttons-active-state.js"></script>
-        <script src="js/best-score.js"></script>
-        <script src="js/on-pointer-events-helpers.js"></script>
-        <script src="js/pointer-events.js"></script>
-        <script src="js/board.js"></script>
-        <script src="js/game.js"></script>
-    </body>
+        <div class="face-and-data">
+            <span class="unmarked-mines"> <img src="images/flag.png" alt="flag"> : <span>0</span> </span>
+            <span class="face"> </span>
+            <span class="time"> <img src="images/clock.png" alt="clock"> : <span>0</span>s </span>
+        </div>
+
+        <div class="btns-levels">
+            <button title="Changes the difficulty and restarts the game" class="btn btn-begginer"
+                onclick="onLevelClick(this)">Begginer</button>
+            <button title="Changes the difficulty and restarts the game" class="btn btn-medium"
+                onclick="onLevelClick(this)">Medium</button>
+            <button title="Changes the difficulty and restarts the game" class="btn btn-expert"
+                onclick="onLevelClick(this)">Expert</button>
+        </div>
+
+        <table onpointerup="onKeyUpClicked(event)">
+            <tbody class="board"></tbody>
+        </table>
+
+        <table class="best-scores">
+            <thead>
+                <tr>
+                    <td colspan="2">Begginer</td>
+                    <td colspan="2">Medium</td>
+                    <td colspan="2">Expert</td>
+                </tr>
+                <tr>
+                    <td>Name</td>
+                    <td>Score</td>
+                    <td>Name</td>
+                    <td>Score</td>
+                    <td>Name</td>
+                    <td>Score</td>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <footer>Developed by Avi Lupovitch</footer>
+
+    <script src="js/utils.js"></script>
+    <script src="js/globals.js"></script>
+    <script src="js/buttons-active-state.js"></script>
+    <script src="js/best-score.js"></script>
+    <script src="js/on-pointer-events-helpers.js"></script>
+    <script src="js/pointer-events.js"></script>
+    <script src="js/board.js"></script>
+    <script src="js/game.js"></script>
+</body>
+
 </html>

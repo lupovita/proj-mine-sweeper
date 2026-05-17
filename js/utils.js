@@ -5,7 +5,7 @@ function getCellElement(location) {
 }
 
 function getRandomSpecificLocation(board, isSpecificLocationFunc) {
-	const specificLocations = getSpecificLocationsInBoard(board, isSpecificLocationFunc)
+	const specificLocations = getSpecificLocations(board, isSpecificLocationFunc)
 
 	if (specificLocations.length === 0) return null
 	
@@ -18,7 +18,7 @@ function getRandomLocation(locations) {
 	return locations[randIdx]
 }
 
-function getSpecificLocationsInBoard(board, isSpecificLocationFunc) {
+function getSpecificLocations(board, isSpecificLocationFunc) {
 	const res = []
 
 	for (let i = 0; i < board.length; i++) {
@@ -67,7 +67,7 @@ function forEach(mat, func, startRow=0, endRow=mat.length - 1, startCol=0, endCo
     }
 }
 
-function manipulateAreaBetweenTwoLocations(mat, location1, location2, func) {
+function manipulateAreaBetweenLocations(mat, location1, location2, func) {
         const startRow = Math.min(location1.i, location2.i);
         const endRow = Math.max(location1.i, location2.i);
         const startCol = Math.min(location1.j, location2.j);

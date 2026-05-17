@@ -1,10 +1,5 @@
 'use strict'
 
-// TODO: split the js code into organized files: main.js, board.js, globals.js, button-clicks.js, helper-functions.js, 
-//       buttons-active-state.js
-// TODO: split css code into files: main.css, board.css, btns-special.css, header-footer.css, best-scores.css, 
-//       face-and-data.css, dark-mode.css, lives-and-hints.css.
-
 function onInit() {
     gStartTime = 0;
     gIsHintClicked = false;
@@ -121,8 +116,8 @@ function updateGameMoves(gameMovesDiff) {
     }
 }
 
-function startGame(clickedCellLocation) {
-    if (!gGame.minesCount) fillBoard(gBoard, clickedCellLocation);
+function startGame(clickedCellLoc) {
+    if (!gGame.minesCount) fillBoard(gBoard, clickedCellLoc);
     gStartTime = Date.now();
     gTimerIntervalId = setInterval(updateTime, TIMER_INTERVAL_TIMEOUT);
     gGame.isOn = true;

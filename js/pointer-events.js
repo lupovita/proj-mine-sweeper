@@ -8,7 +8,7 @@ function onCellEntered(i, j) {
         // highlight the area between the first click and the current cell hovered:
         const location1 = gMegaHintMode.locations[0], location2 = {i, j};
         const highlightFunc = (cell, location) => getCellElement(location).classList.add('highlight');
-        manipulateAreaBetweenTwoLocations(gBoard, location1, location2, highlightFunc);
+        manipulateAreaBetweenLocations(gBoard, location1, location2, highlightFunc);
     }
 }
 
@@ -26,7 +26,8 @@ function onKeyUpClicked(ev) {
     if (isGameFinished()) return;
     changeFace(FACE_SMILE_HTML);
     if (ev.button === 1) {
-        unshowNegs(gElCellDownClicked, +gElCellDownClicked.dataset.i, +gElCellDownClicked.dataset.j);
+        const i = +gElCellDownClicked.dataset.i, j = +gElCellDownClicked.dataset.j;
+        unshowNegs(gElCellDownClicked, i, j);
         ev.preventDefault();
     }
 }
@@ -78,7 +79,6 @@ function onCellMarked(elCell, i, j) {
 }
 
 function onLevelClick(elBtn) {
-    if (gGame.isOn) return;
     if (elBtn.className.includes(CLASS_BEGGINER)) gLevel = LEVELS.BEGGINER;
     else if (elBtn.className.includes(CLASS_MEDIUM)) gLevel = LEVELS.MEDIUM;
     else gLevel = LEVELS.EXPERT;
@@ -105,8 +105,10 @@ function onSafeClick() {
     if (!gGame.isOn || gGame.safeClicks === 0) return;
     updateGameMoves(1);
     updateSafeClicks(-1);
-    const isSafeLocation = (location, board) => 
-                    !board[location.i][location.j].isMine && !board[location.i][location.j].isRevealed;
+    const isSafeLocation = (location, board) => {
+        const cell = board[location.i][location.j];
+        return !cell.isMine && !cell.isRevealed;
+    };
     const safeLocation = getRandomSpecificLocation(gBoard, isSafeLocation);
     const cell = gBoard[safeLocation.i][safeLocation.j];
     const elCell = getCellElement(safeLocation);
@@ -149,10 +151,14 @@ function onMegaHintClick(elBtn) {
 function onExterminateMinesClick() {
     if (!gGame.isOn) return;
     for (let i = 0; i < EXTERMINATE_MINES_AMOUNT; i++) {
-        const isMineLocationFunc = (location, board) => board[location.i][location.j].isMine;
+        const isMineLocationFunc = (location, board) => {
+            const cell = board[location.i][location.j];
+            return cell.isMine;
+        };
         const mineLocation = getRandomSpecificLocation(gBoard, isMineLocationFunc);
         if (!mineLocation) break;
-        gBoard[mineLocation.i][mineLocation.j].isMine = false;
+        const cell = gBoard[mineLocation.i][mineLocation.j];
+        cell.isMine = false;
         gGame.minesCount--;
     }
     setMinesNegsCount(gBoard);

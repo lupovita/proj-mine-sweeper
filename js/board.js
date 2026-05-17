@@ -18,10 +18,11 @@ function buildCleanBoard() {
     return board;
 }
 
-function fillBoard(board, clickedCellLocation) {
-    const isAvailableLocationFunc = (location, board) => 
-                    !board[location.i][location.j].isMine &&
-                    !(location.i === clickedCellLocation.i && location.j === clickedCellLocation.j);
+function fillBoard(board, clickedCellLoc) {
+    const isAvailableLocationFunc = (location, board) => {
+        const cell = board[location.i][location.j];
+        return !cell.isMine && !(location.i === clickedCellLoc.i && location.j === clickedCellLoc.j);
+    };
     fillBoardWithMines(board, isAvailableLocationFunc, gLevel.MINES);
     setMinesNegsCount(board);
     renderBoard();
@@ -32,7 +33,8 @@ function fillBoardWithMines(board, isAvailableLocationFunc, minesAmount) {
     for (let i = 0; i < minesAmount; i++) {
         const availableLocation = getRandomSpecificLocation(board, isAvailableLocationFunc);
         if (!availableLocation) break;
-        board[availableLocation.i][availableLocation.j].isMine = true;
+        const availableCell = board[availableLocation.i][availableLocation.j];
+        availableCell.isMine = true;
         gGame.minesCount++;
     }
 }
@@ -172,6 +174,7 @@ function markCell(elCell, cell) {
 }
 
 function unmarkCell(elCell, cell) {
+    if (!cell.isMarked) return;
     cell.isMarked = false;
     elCell.innerHTML = getCellInnerHTML(cell);
     elCell.classList.remove('marked');
