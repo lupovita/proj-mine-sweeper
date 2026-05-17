@@ -159,10 +159,6 @@ button.unclickable {
     cursor: not-allowed;
 }
 
-.highlight {
-    background-color: var(--highlight-bg);
-}
-
 button:hover {
     background-color: var(--clr8);
 }
@@ -194,6 +190,10 @@ table {
 .revealed {
     background-color: var(--revealed-bg);
     cursor: default;
+}
+
+.highlight {
+    background-color: var(--highlight-bg);
 }
 
 .marked {
